@@ -4,13 +4,14 @@ import { MigrationBuilder, ColumnDefinitions } from 'node-pg-migrate';
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-  pgm.createTable('badge', {
+  pgm.createTable('badges', {
     id: {
       type: 'uuid',
       notNull: true,
+      primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    author_id: { type: 'uuid', notNull: true },
+    author_id: { type: 'uuid', notNull: true, references: 'users("id")' },
     name: {
       type: 'VARCHAR(250)',
       notNull: true,
@@ -34,5 +35,5 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-  pgm.dropTable('badge');
+  pgm.dropTable('badges');
 }

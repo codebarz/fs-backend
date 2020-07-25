@@ -4,14 +4,15 @@ import { MigrationBuilder, ColumnDefinitions } from 'node-pg-migrate';
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-  pgm.createTable('comment', {
+  pgm.createTable('comments', {
     id: {
       type: 'uuid',
       notNull: true,
+      primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    author_id: { type: 'uuid', notNull: true, references: 'user(id)' },
-    post_id: { type: 'uuid', notNull: true, references: 'post(id)' },
+    author_id: { type: 'uuid', notNull: true, references: 'users("id")' },
+    post_id: { type: 'uuid', notNull: true, references: 'posts("id")' },
     comment: { type: 'TEXT', notNull: true },
     comment_id: { type: 'uuid', notNull: false },
     created_at: {
@@ -29,5 +30,5 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-  pgm.dropTable('comment');
+  pgm.dropTable('comments');
 }

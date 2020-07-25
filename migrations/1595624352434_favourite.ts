@@ -4,21 +4,22 @@ import { MigrationBuilder, ColumnDefinitions } from 'node-pg-migrate';
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-  pgm.createTable('favourite', {
+  pgm.createTable('favourites', {
     id: {
       type: 'uuid',
       notNull: true,
+      primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
     user_id: {
       type: 'uuid',
       notNull: true,
-      references: 'user(id)',
+      references: 'users("id")',
     },
     post_id: {
       type: 'uuid',
       notNull: true,
-      references: 'post(id)',
+      references: 'posts("id")',
     },
     created_at: {
       type: 'timestamptz',
@@ -35,5 +36,5 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-  pgm.dropTable('favourite');
+  pgm.dropTable('favourites');
 }
