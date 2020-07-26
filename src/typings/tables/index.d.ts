@@ -1,10 +1,14 @@
+declare enum Role {
+  'Admin',
+  'Contributor',
+}
 export interface User {
   id: string;
   user_name: string;
   email: string;
   password: string;
   avatar_url: string;
-  is_admin: boolean;
+  role: Role;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
