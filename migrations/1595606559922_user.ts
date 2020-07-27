@@ -12,6 +12,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
       default: pgm.func('uuid_generate_v4()'),
     },
     user_name: { type: 'VARCHAR(250)', notNull: true },
+    user_name_pure: { type: 'VARCHAR(250)' },
     email: { type: 'VARCHAR(250)', notNull: true },
     password: { type: 'VARCHAR(250)', notNull: true },
     avatar_url: { type: 'VARCHAR(250)', notNull: true },
