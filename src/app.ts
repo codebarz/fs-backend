@@ -7,7 +7,7 @@ import graphQLHTTP from 'express-graphql';
 import path from 'path';
 import fs from 'fs';
 
-import apiRouter from './routes/index';
+import { authRouter } from './routes/index';
 import schema from './schema';
 
 const app = express();
@@ -47,13 +47,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api', apiRouter);
+app.use('/api/v1/auth', authRouter.default);
 
 app.use(
   '/graphql',
-  graphQLHTTP({
-    schema,
-    graphiql: true,
+  graphQLHTTP(req => {
+    return { schema, context: { req }, graphiql: true };
   }),
 );
 
